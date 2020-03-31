@@ -10,18 +10,18 @@ defmodule MyApp.User do
   use Ecto.Schema
   alias __MODULE__
 
-  schema "joggers" do
+  schema "users" do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:full_name, :string, virtual: true)
     timestamps(type: :utc_datetime)
   end
 
-  def fill_virtual_fields(%Jogger{} = jogger) do
-    first_name = Map.fetch!(jogger, :first_name)
-    last_name = Map.fetch!(jogger, :last_name)
+  def fill_virtual_fields(%User{} = user) do
+    first_name = Map.fetch!(user, :first_name)
+    last_name = Map.fetch!(user, :last_name)
 
-    Map.put(jogger, :full_name, "#{first_name} #{last_name}")
+    Map.put(user, :full_name, "#{first_name} #{last_name}")
   end
 end
 ```

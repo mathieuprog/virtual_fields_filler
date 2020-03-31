@@ -2,6 +2,7 @@ defmodule VirtualFieldsFiller.Jogger do
   use QueryBuilder, assoc_fields: [:team, :jog_records]
   use Ecto.Schema
   alias __MODULE__
+  @behaviour VirtualFieldsFiller
 
   schema "joggers" do
     field(:first_name, :string)

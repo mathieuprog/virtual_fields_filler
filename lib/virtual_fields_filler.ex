@@ -1,4 +1,6 @@
 defmodule VirtualFieldsFiller do
+  @callback fill_virtual_fields(struct) :: struct
+
   def fill_virtual_fields([]), do: []
 
   def fill_virtual_fields([head | tail]) do

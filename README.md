@@ -1,6 +1,32 @@
-# VirtualFieldsFiller
+# Virtual Fields Filler
 
-Fill the virtual fields for your Ecto structs and nested structs recursively:
+Fill the virtual fields for your Ecto structs and nested structs recursively.
+
+In your Schema, add the `fill_virtual_fields/1` function:
+
+```
+defmodule MyApp.User do
+  @behaviour VirtualFieldsFiller
+  use Ecto.Schema
+  alias __MODULE__
+
+  schema "joggers" do
+    field(:first_name, :string)
+    field(:last_name, :string)
+    field(:full_name, :string, virtual: true)
+    timestamps(type: :utc_datetime)
+  end
+
+  def fill_virtual_fields(%Jogger{} = jogger) do
+    first_name = Map.fetch!(jogger, :first_name)
+    last_name = Map.fetch!(jogger, :last_name)
+
+    Map.put(jogger, :full_name, "#{first_name} #{last_name}")
+  end
+end
+```
+
+Then, after fetching a user (or list of users) from your DB, call `VirtualFieldsFiller.fill_virtual_fields/1`:
 
 ```
 import VirtualFieldsFiller
@@ -9,6 +35,8 @@ User
 |> Repo.get!(id)
 |> fill_virtual_fields()
 ```
+
+
 
 If you use [QueryBuilder](https://github.com/mathieuprog/query_builder), you may organize your code as follows:
 

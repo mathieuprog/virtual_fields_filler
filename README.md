@@ -29,7 +29,8 @@ end
 ```
 
 As `QueryBuilder` encourages to pass the association names that needs to be preloaded to the Context function, you may
-call `fill_virtual_fields/1` in the Context function, right after the call to the `Repo` function.
+call `fill_virtual_fields/1` in the Context function, right after the call to the `Repo` function, so that any nested
+struct gets its virtual fields filled.
 
 ## Installation
 

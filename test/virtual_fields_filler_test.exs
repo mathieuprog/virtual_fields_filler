@@ -9,7 +9,7 @@ defmodule VirtualFieldsFillerTest do
   doctest VirtualFieldsFiller
 
   setup do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(VirtualFieldsFiller.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
   setup :insert_demo_data

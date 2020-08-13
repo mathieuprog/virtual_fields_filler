@@ -1,10 +1,6 @@
 defmodule VirtualFieldsFiller do
   @callback fill_virtual_fields(struct) :: struct
 
-  defguard is_struct_or_list_of_structs(value)
-           when is_struct(value) or
-                  (is_list(value) and length(value) > 0 and is_struct(hd(value)))
-
   def fill_virtual_fields([]), do: []
 
   def fill_virtual_fields([head | tail]) do
@@ -24,15 +20,23 @@ defmodule VirtualFieldsFiller do
 
     Map.keys(entity)
     |> Enum.reduce(entity, fn field_name, entity ->
-      case Map.fetch!(entity, field_name) do
-        nested when is_struct_or_list_of_structs(nested) ->
-          struct(entity, [
-            {field_name, fill_virtual_fields(nested)}
-          ])
+      field_value = Map.fetch!(entity, field_name)
 
-        _ ->
-          entity
+      if is_schema_or_list_of_schemas(field_value) do
+        struct(entity, [
+          {field_name, fill_virtual_fields(field_value)}
+        ])
+      else
+        entity
       end
     end)
   end
+
+  defp is_schema_or_list_of_schemas(nil), do: false
+
+  defp is_schema_or_list_of_schemas(%{__meta__: _}), do: true
+
+  defp is_schema_or_list_of_schemas([%{__meta__: _} | _]), do: true
+
+  defp is_schema_or_list_of_schemas(_), do: false
 end

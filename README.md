@@ -67,7 +67,7 @@ Add `virtual_fields_filler` for Elixir as a dependency in your `mix.exs` file:
 ```elixir
 def deps do
   [
-    {:virtual_fields_filler, "~> 0.2.0"}
+    {:virtual_fields_filler, "~> 0.3.0"}
   ]
 end
 ```

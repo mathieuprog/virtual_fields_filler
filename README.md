@@ -4,7 +4,7 @@ Fill the virtual fields for your Ecto structs and nested structs recursively.
 
 In your Schema, add the `fill_virtual_fields/1` function:
 
-```
+```elixir
 defmodule MyApp.User do
   @behaviour VirtualFieldsFiller
   use Ecto.Schema
@@ -28,7 +28,7 @@ end
 
 Then, after fetching a user (or list of users) from your DB, call `VirtualFieldsFiller.fill_virtual_fields/1`:
 
-```
+```elixir
 import VirtualFieldsFiller
 
 User
@@ -41,7 +41,7 @@ User
 If you use [QueryBuilder](https://github.com/mathieuprog/query_builder), you may organize your code as follows:
 
 
-```
+```elixir
 # in your controller:
 
 Blog.get_article_by_id(article_id, preload: [:category, comments: :user])
